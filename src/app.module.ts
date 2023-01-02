@@ -13,6 +13,7 @@ import { PositionCategoriesModule } from './position-categories/position-categor
 import { PositionsModule } from './positions/positions.module'
 import { DocumentsModule } from './documents/documents.module'
 import { DocumentsCategoriesModule } from './documents-categories/documents-categories.module'
+import { ProvidersModule } from './providers/providers.module'
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { DocumentsCategoriesModule } from './documents-categories/documents-cate
     PositionsModule,
     DocumentsModule,
     DocumentsCategoriesModule,
+    ProvidersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
