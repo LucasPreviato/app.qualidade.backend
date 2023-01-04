@@ -117,8 +117,8 @@ model DocumentCategory {
   createdAt DateTime @default(now())
 
   documentType DocumentType
-  codeFormat DocumentCodeFormat
-  
+  codeFormat   DocumentCodeFormat
+
   document Document[]
 }
 
@@ -142,4 +142,43 @@ enum DocumentStatus {
   REJECTED
   OBSOLETE
   INATIVE
+}
+
+model Provider {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  nickname  String?
+  cnpj      String
+  email     String?
+  phone     String?
+  critical  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  providerCategory   ProviderCategory @relation(fields: [providerCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  providerCategoryId Int
+}
+
+model ProviderCategory {
+  id                            Int                            @id @default(autoincrement())
+  name                          String                         @unique
+  requiredInitialQualification  Boolean                        @default(false)
+  requiredPeriodicQualification Boolean                        @default(false)
+  periodicCheck                 Boolean                        @default(false)
+  createdAt                     DateTime                       @default(now())
+  QuestionsInitalQualification  QuestionsInitalQualification[]
+  Provider                      Provider[]
+}
+
+model QuestionsInitalQualification {
+  id                   Int                  @id @default(autoincrement())
+  question             String
+  createdAt            DateTime             @default(now())
+  typeOfAnswerQuestion TypeOfAnswerQuestion @default(OBJECTIVE)
+  providerCategory     ProviderCategory     @relation(fields: [providerCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  providerCategoryId   Int
+}
+
+enum TypeOfAnswerQuestion {
+  OBJECTIVE
+  MULTIPLE_CHOICE
 }
