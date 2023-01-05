@@ -14,6 +14,7 @@ import { PositionsModule } from './positions/positions.module'
 import { DocumentsModule } from './documents/documents.module'
 import { DocumentsCategoriesModule } from './documents-categories/documents-categories.module'
 import { ProvidersModule } from './providers/providers.module'
+import { ProvidersCategoriesModule } from './providers-categories/providers-categories.module'
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ProvidersModule } from './providers/providers.module'
     DocumentsModule,
     DocumentsCategoriesModule,
     ProvidersModule,
+    ProvidersCategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

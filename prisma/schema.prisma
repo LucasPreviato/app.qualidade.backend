@@ -153,6 +153,7 @@ model Provider {
   phone     String?
   critical  Boolean  @default(false)
   createdAt DateTime @default(now())
+  status    Boolean  @default(true)
 
   providerCategory   ProviderCategory @relation(fields: [providerCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   providerCategoryId Int

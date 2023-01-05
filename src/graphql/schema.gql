@@ -5,6 +5,7 @@
 type Collaborator {
   createdAt: DateTime!
   department: ResolveDepartments!
+  documents: [ResolveDocuments!]
   email: String!
   hireDate: DateTime!
   id: Int!
@@ -30,6 +31,29 @@ input CreateDepartmentInput {
   unitId: Int
 }
 
+input CreateDocumentInput {
+  approverAt: DateTime
+  approverId: Int
+  departmentId: Int!
+  documentCategoryId: Int!
+  elaboratorAt: DateTime
+  elaboratorId: Int!
+  fileURL: String
+  name: String!
+  pdfURL: String
+  reference: String
+  revisorAt: DateTime
+  revisorId: Int
+  status: DocumentStatus
+  unitId: Int!
+  updatedAt: DateTime
+}
+
+input CreateDocumentsCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 input CreatePositionCategoryInput {
   name: String!
 }
@@ -46,6 +70,18 @@ input CreatePositionInput {
   requiredQualifications: String
   revisionAt: DateTime!
   version: Int!
+}
+
+input CreateProviderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateProvidersCategoryInput {
+  name: String!
+  periodicCheck: Boolean
+  requiredInitialQualification: Boolean
+  requiredPeriodicQualification: Boolean
 }
 
 input CreateUnitInput {
@@ -68,21 +104,84 @@ type Department {
   unit: ResolveUnit
 }
 
+type Document {
+  DocumentCategory: ResolveDocumentsCategory!
+  approver: ResolveCollaborators
+  approverAt: DateTime
+  createdAt: DateTime!
+  department: ResolveDepartments!
+  elaborator: ResolveCollaborators!
+  elaboratorAt: DateTime
+  fileURL: String
+  id: Int!
+  name: String!
+  pdfURL: String
+  reference: String
+  revisor: ResolveCollaborators
+  revisorAt: DateTime
+  status: DocumentStatus!
+  unit: ResolveUnit!
+  updatedAt: DateTime
+}
+
+enum DocumentCodeFormat {
+  NUMBERED_BY_DEPARTMENT
+  NUMBERED_SEPARATELY_BY_DEPARTMENT
+  SIMPLE
+}
+
+enum DocumentStatus {
+  APPROVAL
+  APPROVED
+  ELABORATION
+  INATIVE
+  OBSOLETE
+  REJECTED
+  REVISION
+}
+
+enum DocumentType {
+  EXCEL
+  PDF
+  WORD
+}
+
+type DocumentsCategory {
+  codeFormat: DocumentCodeFormat!
+  createdAt: DateTime!
+  documentType: DocumentType!
+  documents: [ResolveDocuments!]
+  id: Int!
+  name: String!
+}
+
 type Mutation {
   createCollaborator(createCollaboratorInput: CreateCollaboratorInput!): Collaborator!
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
+  createDocument(createDocumentInput: CreateDocumentInput!): Document!
+  createDocumentsCategory(createDocumentsCategoryInput: CreateDocumentsCategoryInput!): DocumentsCategory!
   createPosition(createPositionInput: CreatePositionInput!): Position!
   createPositionCategory(createPositionCategoryInput: CreatePositionCategoryInput!): PositionCategory!
+  createProvider(createProviderInput: CreateProviderInput!): Provider!
+  createProvidersCategory(createProvidersCategoryInput: CreateProvidersCategoryInput!): ProvidersCategory!
   createUnit(createUnitInput: CreateUnitInput!): Unit!
   removeCollaborator(id: Int!): Collaborator!
   removeDepartment(id: Int!): Department!
+  removeDocument(id: Int!): Document!
+  removeDocumentsCategory(id: Int!): DocumentsCategory!
   removePosition(id: Int!): Position!
   removePositionCategory(id: Int!): PositionCategory!
+  removeProvider(id: Int!): Provider!
+  removeProvidersCategory(id: Int!): ProvidersCategory!
   removeUnit(id: Int!): Unit!
   updateCollaborator(updateCollaboratorInput: UpdateCollaboratorInput!): Collaborator!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
+  updateDocument(updateDocumentInput: UpdateDocumentInput!): Document!
+  updateDocumentsCategory(updateDocumentsCategoryInput: UpdateDocumentsCategoryInput!): DocumentsCategory!
   updatePosition(updatePositionInput: UpdatePositionInput!): Position!
   updatePositionCategory(updatePositionCategoryInput: UpdatePositionCategoryInput!): PositionCategory!
+  updateProvider(updateProviderInput: UpdateProviderInput!): Provider!
+  updateProvidersCategory(updateProvidersCategoryInput: UpdateProvidersCategoryInput!): ProvidersCategory!
   updateUnit(updateUnitInput: UpdateUnitInput!): Unit!
 }
 
@@ -110,15 +209,45 @@ type PositionCategory {
   positions: [ResolvePositions!]
 }
 
+type Provider {
+  cnpj: String!
+  critical: Boolean!
+  email: String!
+  id: Int!
+  name: String!
+  nickname: String!
+  phone: String!
+  providersCategory: ResolveProvidersCategories!
+  status: Boolean!
+}
+
+type ProvidersCategory {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  periodicCheck: Boolean
+  providers: [ResolveProvider!]
+  requiredInitialQualification: Boolean
+  requiredPeriodicQualification: Boolean
+}
+
 type Query {
   collaborator(id: Int!): Collaborator!
   collaborators: [Collaborator!]!
   department(id: Int!): Department!
   departments: [Department!]!
+  document(id: Int!): Document!
+  documents: [Document!]!
+  documentsCategories: [DocumentsCategory!]!
+  documentsCategory(id: Int!): DocumentsCategory!
   position(id: Int!): Position!
   positionCategories: [PositionCategory!]!
   positionCategory(id: Int!): PositionCategory!
   positions: [Position!]!
+  provider(id: Int!): Provider!
+  providers: [Provider!]!
+  providersCategories: [ProvidersCategory!]!
+  providersCategory(id: Int!): ProvidersCategory!
   unit(id: Int!): Unit!
   units: [Unit!]!
 }
@@ -137,6 +266,28 @@ type ResolveDepartments {
   email: String
   id: Int!
   initials: String
+  name: String!
+}
+
+type ResolveDocuments {
+  approverAt: DateTime
+  createdAt: DateTime!
+  elaboratorAt: DateTime
+  fileURL: String
+  id: Int!
+  name: String!
+  pdfURL: String
+  reference: String
+  revisorAt: DateTime
+  status: DocumentStatus!
+  updatedAt: DateTime
+}
+
+type ResolveDocumentsCategory {
+  codeFormat: DocumentCodeFormat!
+  createdAt: DateTime!
+  documentType: DocumentType!
+  id: Int!
   name: String!
 }
 
@@ -161,6 +312,26 @@ type ResolvePositions {
   version: Int!
 }
 
+type ResolveProvider {
+  cnpj: String!
+  critical: Boolean!
+  email: String!
+  id: Int!
+  name: String!
+  nickname: String!
+  phone: String!
+  status: Boolean!
+}
+
+type ResolveProvidersCategories {
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  periodicCheck: Boolean
+  requiredInitialQualification: Boolean
+  requiredPeriodicQualification: Boolean
+}
+
 type ResolveUnit {
   email: String
   id: Int!
@@ -171,6 +342,7 @@ type ResolveUnit {
 type Unit {
   collaborators: [ResolveCollaborators!]
   departments: [ResolveDepartments!]
+  documents: [ResolveDocuments!]
   email: String
   id: Int!
   name: String!
@@ -195,6 +367,31 @@ input UpdateDepartmentInput {
   unitId: Int
 }
 
+input UpdateDocumentInput {
+  approverAt: DateTime
+  approverId: Int
+  departmentId: Int
+  documentCategoryId: Int
+  elaboratorAt: DateTime
+  elaboratorId: Int
+  fileURL: String
+  id: Int!
+  name: String
+  pdfURL: String
+  reference: String
+  revisorAt: DateTime
+  revisorId: Int
+  status: DocumentStatus
+  unitId: Int
+  updatedAt: DateTime
+}
+
+input UpdateDocumentsCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
 input UpdatePositionCategoryInput {
   id: Int!
   name: String
@@ -213,6 +410,20 @@ input UpdatePositionInput {
   requiredQualifications: String
   revisionAt: DateTime
   version: Int
+}
+
+input UpdateProviderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateProvidersCategoryInput {
+  id: Int!
+  name: String
+  periodicCheck: Boolean
+  requiredInitialQualification: Boolean
+  requiredPeriodicQualification: Boolean
 }
 
 input UpdateUnitInput {
