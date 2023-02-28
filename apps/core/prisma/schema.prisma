@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Unit      Unit[]
+
+  @@map("companies")
+}
+
+model Unit {
+  id         Int          @id @default(autoincrement())
+  name       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  company    Company      @relation(fields: [companyId], references: [id])
+  companyId  Int
+  Department Department[]
+  Employee   Employee[]
+
+  @@map("units")
+}
+
+model Department {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Unit      Unit       @relation(fields: [unitId], references: [id])
+  unitId    Int
+  Employee  Employee[]
+
+  @@map("departments")
+}
+
+model Employee {
+  id           Int        @id @default(autoincrement())
+  name         String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  unit         Unit       @relation(fields: [unitId], references: [id])
+  unitId       Int
+  Department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  JobTitle     JobTitle?  @relation(fields: [jobTitleId], references: [id])
+  jobTitleId   Int?
+
+  @@map("employees")
+}
+
+model JobTitle {
+  id            Int          @id @default(autoincrement())
+  name          String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Employee      Employee[]
+  JobCategory   JobCategory? @relation(fields: [jobCategoryId], references: [id])
+  jobCategoryId Int?
+
+  @@map("job_titles")
+}
+
+model JobCategory {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  JobTitle  JobTitle[]
+
+  @@map("job_categories")
+}
