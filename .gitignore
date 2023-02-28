@@ -36,3 +36,6 @@ yarn-error.log*
 .docker/postgres
 .docker/redis
 .docker/mongo
+
+yarn.lock
+yarn-error.log
