@@ -12,9 +12,17 @@
     "format": "turbo run format",
     "test": "turbo run test",
     "start": "turbo run start",
-    "test:watch": "turbo run test:watch"
+    "test:watch": "turbo run test:watch",
+    "prepare": "husky install",
+    "commit": "cz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
     "prettier": "latest",
     "turbo": "latest"
   },
@@ -22,5 +30,10 @@
     "node": ">=14.0.0"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
