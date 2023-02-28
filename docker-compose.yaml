@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  core:
+    container_name: core
+    build: 
+      context: .
+      dockerfile: ./apps/core/Dockerfile
+    ports:
+      - "3333:3333"
+    volumes:
+      - .:/home/node/backend/core
+    depends_on:
+      - postgres-dev
+  providers:
+    container_name: qualilabs-providers
+    build: 
+      context: .
+      dockerfile: ./apps/providers/Dockerfile
+    ports:
+      - "3334:3334"
+    volumes:
+      - .:/home/node/backend/providers
+  postgres-dev:
+    container_name: postgres-dev
+    image: postgres:alpine
+    ports:
+        - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: qualilabs
+    volumes:
+      - ./apps/.docker/postgres/data:/home/node/postgres/data 
+      
+
+    
