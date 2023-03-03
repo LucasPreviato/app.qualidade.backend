@@ -12,7 +12,14 @@ datasource db {
 
 model Laboratory {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @unique
+  nickname  String?
+  cgc       String?
+  IE        String?
+  IM        String?
+  email     String?
+  phone     String?
+  website   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Unit      Unit[]
