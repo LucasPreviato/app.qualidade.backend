@@ -11,7 +11,7 @@ import { DepartmentsModule } from './departments/departments.module';
 import { EmployeesModule } from './employees/employees.module';
 import { JobCategoriesModule } from './job-categories/job-categories.module';
 import { JobTitlesModule } from './job-titles/job-titles.module';
-import { PrismaModule } from './prisma/prisma.module'
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
