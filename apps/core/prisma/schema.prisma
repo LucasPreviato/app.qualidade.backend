@@ -10,25 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Company {
+model Laboratory {
   id        Int      @id @default(autoincrement())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Unit      Unit[]
 
-  @@map("companies")
+  @@map("laboratories")
 }
 
 model Unit {
-  id         Int          @id @default(autoincrement())
-  name       String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  company    Company      @relation(fields: [companyId], references: [id])
-  companyId  Int
-  Department Department[]
-  Employee   Employee[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Department   Department[]
+  Employee     Employee[]
+  Laboratory   Laboratory?  @relation(fields: [laboratoryId], references: [id])
+  laboratoryId Int?
 
   @@map("units")
 }
