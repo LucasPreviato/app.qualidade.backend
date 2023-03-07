@@ -1,0 +1,135 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateDepartmentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateEmployeeInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateJobCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateJobTitleInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateLaboratoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateUnitInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Department {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Employee {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type JobCategory {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type JobTitle {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Laboratory {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Mutation {
+  createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
+  createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
+  createJobCategory(createJobCategoryInput: CreateJobCategoryInput!): JobCategory!
+  createJobTitle(createJobTitleInput: CreateJobTitleInput!): JobTitle!
+  createLaboratory(createLaboratoryInput: CreateLaboratoryInput!): Laboratory!
+  createUnit(createUnitInput: CreateUnitInput!): Unit!
+  removeDepartment(id: Int!): Department!
+  removeEmployee(id: Int!): Employee!
+  removeJobCategory(id: Int!): JobCategory!
+  removeJobTitle(id: Int!): JobTitle!
+  removeLaboratory(id: Int!): Laboratory!
+  removeUnit(id: Int!): Unit!
+  updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
+  updateEmployee(updateEmployeeInput: UpdateEmployeeInput!): Employee!
+  updateJobCategory(updateJobCategoryInput: UpdateJobCategoryInput!): JobCategory!
+  updateJobTitle(updateJobTitleInput: UpdateJobTitleInput!): JobTitle!
+  updateLaboratory(updateLaboratoryInput: UpdateLaboratoryInput!): Laboratory!
+  updateUnit(updateUnitInput: UpdateUnitInput!): Unit!
+}
+
+type Query {
+  department(id: Int!): Department!
+  departments: [Department!]!
+  employee(id: Int!): Employee!
+  employees: [Employee!]!
+  jobCategories: [JobCategory!]!
+  jobCategory(id: Int!): JobCategory!
+  jobTitle(id: Int!): JobTitle!
+  jobTitles: [JobTitle!]!
+  laboratories: [Laboratory!]!
+  laboratory(id: Int!): Laboratory!
+  unit(id: Int!): Unit!
+  units: [Unit!]!
+}
+
+type Unit {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateDepartmentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateEmployeeInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateJobCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateJobTitleInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateLaboratoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateUnitInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
