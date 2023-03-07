@@ -13,7 +13,7 @@ export class CreateLaboratoryInput {
   @Field({ nullable: true })
   IM?: string;
   @Field({ nullable: true })
-  email: string;
+  email?: string;
   @Field({ nullable: true })
   phone?: string;
   @Field({ nullable: true })

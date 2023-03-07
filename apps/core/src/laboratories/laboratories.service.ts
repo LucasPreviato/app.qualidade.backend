@@ -1,11 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateLaboratoryInput } from './dto/create-laboratory.input';
 import { UpdateLaboratoryInput } from './dto/update-laboratory.input';
+import { ILaboratory } from './interfaces/laboratory.interface';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class LaboratoriesService {
-  create(createLaboratoryInput: CreateLaboratoryInput) {
-    return 'This action adds a new laboratory';
+  private laboratories: ILaboratory[] = [];
+  private readonly logger = new Logger(LaboratoriesService.name);
+  async createdUpdateLaboratory(
+    createLaboratoryInput: CreateLaboratoryInput,
+  ): Promise<void> {
+    await this.create(createLaboratoryInput);
+  }
+  async findAllLaboratories(): Promise<ILaboratory[]> {
+    return await this.laboratories;
+  }
+
+  private create(createLaboratoryInput: CreateLaboratoryInput): void {
+    const { name, nickname, cgc, IE, IM, email, phone, website } =
+      createLaboratoryInput;
+    const laboratory: ILaboratory = {
+      id: uuidv4(),
+      name,
+      nickname,
+      cgc,
+      IE,
+      IM,
+      email,
+      phone,
+      website,
+    };
+    this.logger.log(`Laboratory created: ${JSON.stringify(laboratory)}`);
   }
 
   findAll() {

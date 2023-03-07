@@ -1,4 +1,4 @@
-export interface Laboratory {
+export interface ILaboratory {
   id: number;
   name: string;
   nickname: string;
@@ -7,6 +7,5 @@ export interface Laboratory {
   IM: string;
   email: string;
   phone: string;
-  website: string;
+  website?: string;
 }
-

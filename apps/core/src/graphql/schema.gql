@@ -22,11 +22,6 @@ input CreateJobTitleInput {
   exampleField: Int!
 }
 
-input CreateLaboratoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input CreateUnitInput {
   """Example field (placeholder)"""
   exampleField: Int!
@@ -52,29 +47,21 @@ type JobTitle {
   exampleField: Int!
 }
 
-type Laboratory {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Mutation {
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department!
   createEmployee(createEmployeeInput: CreateEmployeeInput!): Employee!
   createJobCategory(createJobCategoryInput: CreateJobCategoryInput!): JobCategory!
   createJobTitle(createJobTitleInput: CreateJobTitleInput!): JobTitle!
-  createLaboratory(createLaboratoryInput: CreateLaboratoryInput!): Laboratory!
   createUnit(createUnitInput: CreateUnitInput!): Unit!
   removeDepartment(id: Int!): Department!
   removeEmployee(id: Int!): Employee!
   removeJobCategory(id: Int!): JobCategory!
   removeJobTitle(id: Int!): JobTitle!
-  removeLaboratory(id: Int!): Laboratory!
   removeUnit(id: Int!): Unit!
   updateDepartment(updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateEmployee(updateEmployeeInput: UpdateEmployeeInput!): Employee!
   updateJobCategory(updateJobCategoryInput: UpdateJobCategoryInput!): JobCategory!
   updateJobTitle(updateJobTitleInput: UpdateJobTitleInput!): JobTitle!
-  updateLaboratory(updateLaboratoryInput: UpdateLaboratoryInput!): Laboratory!
   updateUnit(updateUnitInput: UpdateUnitInput!): Unit!
 }
 
@@ -87,8 +74,6 @@ type Query {
   jobCategory(id: Int!): JobCategory!
   jobTitle(id: Int!): JobTitle!
   jobTitles: [JobTitle!]!
-  laboratories: [Laboratory!]!
-  laboratory(id: Int!): Laboratory!
   unit(id: Int!): Unit!
   units: [Unit!]!
 }
@@ -117,12 +102,6 @@ input UpdateJobCategoryInput {
 }
 
 input UpdateJobTitleInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input UpdateLaboratoryInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
