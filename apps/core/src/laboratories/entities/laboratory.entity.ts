@@ -1,9 +1,26 @@
 import { ObjectType, Field, Int, OmitType } from '@nestjs/graphql';
+import { ILaboratory } from '../interfaces/laboratory.interface';
 
 @ObjectType()
-export class Laboratory {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+export class Laboratory implements ILaboratory {
+  @Field(() => Int)
+  id: number;
+  @Field()
+  name: string;
+  @Field({ nullable: true })
+  nickname?: string;
+  @Field({ nullable: true })
+  cgc?: string;
+  @Field({ nullable: true })
+  IE?: string;
+  @Field({ nullable: true })
+  IM?: string;
+  @Field({ nullable: true })
+  email?: string;
+  @Field({ nullable: true })
+  phone?: string;
+  @Field({ nullable: true })
+  website?: string;
 }
 
 @ObjectType()

@@ -7,14 +7,21 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class LaboratoriesService {
   private laboratories: ILaboratory[] = [];
+
   private readonly logger = new Logger(LaboratoriesService.name);
-  async createdUpdateLaboratory(
+
+  async createdLaboratory(
     createLaboratoryInput: CreateLaboratoryInput,
   ): Promise<void> {
-    await this.create(createLaboratoryInput);
-  }
-  async findAllLaboratories(): Promise<ILaboratory[]> {
-    return await this.laboratories;
+    const { name } = createLaboratoryInput;
+    const existedLaboratory = this.laboratories.find(
+      (laboratories) => existedLaboratory.name === name,
+    );
+    if (!existedLaboratory) {
+      this.create(createLaboratoryInput);
+    } else {
+      this.logger.log(`Laboratory already exists: ${name}`);
+    }
   }
 
   private create(createLaboratoryInput: CreateLaboratoryInput): void {
@@ -32,18 +39,46 @@ export class LaboratoriesService {
       website,
     };
     this.logger.log(`Laboratory created: ${JSON.stringify(laboratory)}`);
+    this.laboratories.push(laboratory);
   }
 
-  findAll() {
-    return `This action returns all laboratories`;
+  async findAll(): Promise<ILaboratory[]> {
+    return this.laboratories;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} laboratory`;
+  async findOne(nickname: string): Promise<ILaboratory> {
+    const laboratory = this.laboratories.find(
+      (laboratory) => laboratory.nickname === nickname,
+    );
+    if (laboratory) {
+      this.logger.log(`Laboratory found: ${JSON.stringify(laboratory)}`);
+      return laboratory;
+    } else {
+      this.logger.log(`Laboratory not found: ${nickname}`);
+    }
   }
 
-  update(id: number, updateLaboratoryInput: UpdateLaboratoryInput) {
-    return `This action updates a #${id} laboratory`;
+  async update(
+    id: number,
+    updateLaboratoryInput: UpdateLaboratoryInput,
+  ): Promise<ILaboratory> {
+    const laboratory = this.laboratories.find(
+      (laboratory) => laboratory.id === id,
+    );
+    if (laboratory) {
+      const { name, nickname, cgc, IE, IM, email, phone, website } =
+        updateLaboratoryInput;
+      laboratory.name = name;
+      laboratory.nickname = nickname;
+      laboratory.cgc = cgc;
+      laboratory.IE = IE;
+      laboratory.IM = IM;
+      laboratory.email = email;
+      laboratory.phone = phone;
+      laboratory.website = website;
+      this.logger.log(`Laboratory updated: ${JSON.stringify(laboratory)}`);
+      return laboratory;
+    }
   }
 
   remove(id: number) {
