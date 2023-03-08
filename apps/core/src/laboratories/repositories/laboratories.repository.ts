@@ -1,9 +1,12 @@
 import { CreateLaboratoryInput } from '../dto/create-laboratory.input';
-import { ILaboratory } from '../interfaces/laboratory.interface';
+import { Laboratory } from '../entities/laboratory.entity';
 
 export abstract class LaboratoriesRepository {
-  abstract cre(
+  abstract create(
     createLaboratoryInput: CreateLaboratoryInput,
-  ): Promise<void>;
-  abstract findAll(): Promise<ILaboratory[]>;
+  ): Promise<Laboratory>;
+  abstract findAll(): Promise<Laboratory[]>;
+  abstract findOne(id: number): Promise<Laboratory>;
+  abstract update(id: number, laboratory: Laboratory): Promise<Laboratory>;
+  abstract remove(id: number): Promise<Laboratory>;
 }

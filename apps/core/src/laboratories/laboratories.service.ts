@@ -10,37 +10,16 @@ export class LaboratoriesService {
 
   private readonly logger = new Logger(LaboratoriesService.name);
 
-  async createdLaboratory(
-    createLaboratoryInput: CreateLaboratoryInput,
-  ): Promise<void> {
-    const { name } = createLaboratoryInput;
-    const existedLaboratory = this.laboratories.find(
-      (laboratories) => existedLaboratory.name === name,
-    );
-    if (!existedLaboratory) {
-      this.create(createLaboratoryInput);
-    } else {
-      this.logger.log(`Laboratory already exists: ${name}`);
-    }
-  }
-
-  private create(createLaboratoryInput: CreateLaboratoryInput): void {
-    const { name, nickname, cgc, IE, IM, email, phone, website } =
-      createLaboratoryInput;
-    const laboratory: ILaboratory = {
-      id: uuidv4(),
-      name,
-      nickname,
-      cgc,
-      IE,
-      IM,
-      email,
-      phone,
-      website,
-    };
-    this.logger.log(`Laboratory created: ${JSON.stringify(laboratory)}`);
-    this.laboratories.push(laboratory);
-  }
+  async create({
+    name,
+    nickname,
+    cgc,
+    IE,
+    IM,
+    email,
+    phone,
+    website,
+  }: CreateLaboratoryInput): Promise<void> {}
 
   async findAll(): Promise<ILaboratory[]> {
     return this.laboratories;
