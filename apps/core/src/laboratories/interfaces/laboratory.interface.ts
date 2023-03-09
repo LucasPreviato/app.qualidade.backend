@@ -1,5 +1,4 @@
 export interface ILaboratory {
-  id: number;
   name: string;
   nickname?: string;
   cgc?: string;

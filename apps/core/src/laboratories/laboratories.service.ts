@@ -1,13 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreateLaboratoryInput } from './dto/create-laboratory.input';
 import { UpdateLaboratoryInput } from './dto/update-laboratory.input';
-import { ILaboratory } from './interfaces/laboratory.interface';
-import { v4 as uuidv4 } from 'uuid';
+import { Laboratory } from './entities/laboratory.entity';
+import { PrismaLaboratoriesRepository } from './repositories/prisma/prisma.laboratories.repository';
 
 @Injectable()
 export class LaboratoriesService {
-  private laboratories: ILaboratory[] = [];
-
+  constructor(
+    private prismaLaboratoriesRepository: PrismaLaboratoriesRepository,
+  ) {}
   private readonly logger = new Logger(LaboratoriesService.name);
 
   async create({
@@ -19,48 +20,73 @@ export class LaboratoriesService {
     email,
     phone,
     website,
-  }: CreateLaboratoryInput): Promise<void> {}
-
-  async findAll(): Promise<ILaboratory[]> {
-    return this.laboratories;
+  }: CreateLaboratoryInput): Promise<Laboratory> {
+    this.logger.log(`Creating laboratory: ${name}`);
+    const laboratory = {
+      name,
+      nickname,
+      cgc,
+      IE,
+      IM,
+      email,
+      phone,
+      website,
+    };
+    await this.prismaLaboratoriesRepository.create(laboratory);
+    this.logger.log(`Laboratory created: ${name}`);
+    return laboratory;
   }
 
-  async findOne(nickname: string): Promise<ILaboratory> {
-    const laboratory = this.laboratories.find(
-      (laboratory) => laboratory.nickname === nickname,
-    );
-    if (laboratory) {
-      this.logger.log(`Laboratory found: ${JSON.stringify(laboratory)}`);
-      return laboratory;
-    } else {
-      this.logger.log(`Laboratory not found: ${nickname}`);
+  async findAll(): Promise<Laboratory[]> {
+    this.logger.log(`Finding all laboratories`);
+    const laboratories = await this.prismaLaboratoriesRepository.findAll();
+    return laboratories;
+  }
+
+  async findOne(id: number): Promise<Laboratory> {
+    this.logger.log(`Finding laboratory: ${id}`);
+    const laboratory = await this.prismaLaboratoriesRepository.findOne(id);
+    if (!laboratory) {
+      this.logger.error(`Laboratory not found: ${id}`);
+      return null;
     }
+    return laboratory;
   }
 
   async update(
     id: number,
-    updateLaboratoryInput: UpdateLaboratoryInput,
-  ): Promise<ILaboratory> {
-    const laboratory = this.laboratories.find(
-      (laboratory) => laboratory.id === id,
-    );
-    if (laboratory) {
-      const { name, nickname, cgc, IE, IM, email, phone, website } =
-        updateLaboratoryInput;
-      laboratory.name = name;
-      laboratory.nickname = nickname;
-      laboratory.cgc = cgc;
-      laboratory.IE = IE;
-      laboratory.IM = IM;
-      laboratory.email = email;
-      laboratory.phone = phone;
-      laboratory.website = website;
-      this.logger.log(`Laboratory updated: ${JSON.stringify(laboratory)}`);
-      return laboratory;
-    }
+    {
+      name,
+      nickname,
+      cgc,
+      IE,
+      IM,
+      email,
+      phone,
+      website,
+    }: UpdateLaboratoryInput,
+  ): Promise<Laboratory> {
+    const laboratory = await this.prismaLaboratoriesRepository.update(id, {
+      id,
+      name,
+      nickname,
+      cgc,
+      IE,
+      IM,
+      email,
+      phone,
+      website,
+    });
+    return laboratory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} laboratory`;
+  async remove(id: number): Promise<void> {
+    this.logger.log(`Removing laboratory: ${id}`);
+    const laboratory = await this.prismaLaboratoriesRepository.findOne(id);
+    if (!laboratory) {
+      this.logger.error(`Laboratory not found: ${id}`);
+      return null;
+    }
+    await this.prismaLaboratoriesRepository.remove(id);
   }
 }

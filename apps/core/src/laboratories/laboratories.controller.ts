@@ -3,9 +3,9 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import { CreateLaboratoryInput } from './dto/create-laboratory.input';
 import { UpdateLaboratoryInput } from './dto/update-laboratory.input';
@@ -15,11 +15,15 @@ import { LaboratoriesService } from './laboratories.service';
 @Controller('api/qualilabs/laboratories')
 export class LaboratoriesController {
   constructor(private readonly laboratoriesService: LaboratoriesService) {}
+  private readonly logger = new Logger(LaboratoriesController.name);
+
   @Post()
-  async createUpdateLaboratory(
-    @Body() createLaboratoryInput: CreateLaboratoryInput,
-  ) {
-    await this.laboratoriesService.createdLaboratory(createLaboratoryInput);
+  async createLaboratory(@Body() createLaboratoryInput: CreateLaboratoryInput) {
+    const laboratory = await this.laboratoriesService.create(
+      createLaboratoryInput,
+    );
+    this.logger.log(`Laboratory created: ${laboratory.name}`);
+    return laboratory;
   }
   @Get()
   async findAll(): Promise<ILaboratory[]> {
@@ -27,12 +31,12 @@ export class LaboratoriesController {
   }
 
   @Get(':id')
-  async findOne(@Body() nickname: string): Promise<ILaboratory> {
-    return this.laboratoriesService.findOne(nickname);
+  async findOne(@Body() id: number): Promise<ILaboratory> {
+    return this.laboratoriesService.findOne(id);
   }
   @Put(':id')
   async update(
-    @Query() id: number,
+    @Body() id: number,
     @Body() updateLaboratoryInput: UpdateLaboratoryInput,
   ) {
     return this.laboratoriesService.update(id, updateLaboratoryInput);

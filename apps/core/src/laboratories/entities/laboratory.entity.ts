@@ -3,9 +3,9 @@ import { ILaboratory } from '../interfaces/laboratory.interface';
 
 @ObjectType()
 export class Laboratory implements ILaboratory {
-  @Field(() => Int)
-  id: number;
-  @Field()
+  @Field(() => Int, { nullable: true })
+  id?: number;
+  @Field({ nullable: false })
   name: string;
   @Field({ nullable: true })
   nickname?: string;

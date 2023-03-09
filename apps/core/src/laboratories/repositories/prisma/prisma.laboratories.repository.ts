@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreateLaboratoryInput } from 'src/laboratories/dto/create-laboratory.input';
 import { Laboratory } from 'src/laboratories/entities/laboratory.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { LaboratoriesRepository } from '../laboratories.repository';
 
 @Injectable()
-export class PrismaLaboratoriesRepository implements LaboratoriesRepository {
+export class PrismaLaboratoriesRepository {
   constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(PrismaLaboratoriesRepository.name);
+
   async create({
     name,
     nickname,
@@ -29,6 +30,7 @@ export class PrismaLaboratoriesRepository implements LaboratoriesRepository {
         website,
       },
     });
+    this.logger.log(`Laboratory created in database: ${name}`);
     return newLaboratory;
   }
   async findAll(): Promise<Laboratory[]> {
