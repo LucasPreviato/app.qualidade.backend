@@ -5,6 +5,8 @@ services:
     build: 
       context: .
       dockerfile: ./apps/core/Dockerfile
+    env_file:
+      - ./apps/core/.env
     ports:
       - "3334:3334"
     volumes:
