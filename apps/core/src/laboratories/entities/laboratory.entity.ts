@@ -1,7 +1,7 @@
 import { ILaboratory } from '../interfaces/laboratory.interface';
 
 export class Laboratory implements ILaboratory {
-  id?: number;
+  id?: string;
   name: string;
   nickname?: string;
   cgc?: string;

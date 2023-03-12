@@ -31,18 +31,18 @@ export class LaboratoriesController {
   }
 
   @Get(':id')
-  async findOne(@Body() id: number): Promise<ILaboratory> {
+  async findOne(@Body() id: string): Promise<ILaboratory> {
     return this.laboratoriesService.findOne(id);
   }
   @Put(':id')
   async update(
-    @Body() id: number,
+    @Body() id: string,
     @Body() updateLaboratoryInput: UpdateLaboratoryDto,
   ) {
     return this.laboratoriesService.update(id, updateLaboratoryInput);
   }
   @Delete(':id')
-  async remove(@Body() id: number) {
+  async remove(@Body() id: string) {
     return this.laboratoriesService.remove(id);
   }
 }

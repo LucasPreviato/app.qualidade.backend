@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateLaboratoryInput } from 'src/laboratories/dto/create-laboratory.dto';
+import { CreateLaboratoryDto } from 'src/laboratories/dto/create-laboratory.dto';
 import { Laboratory } from 'src/laboratories/entities/laboratory.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -17,7 +17,7 @@ export class PrismaLaboratoriesRepository {
     email,
     phone,
     website,
-  }: CreateLaboratoryInput): Promise<Laboratory> {
+  }: CreateLaboratoryDto): Promise<Laboratory> {
     const newLaboratory = await this.prisma.laboratory.create({
       data: {
         name,
@@ -37,20 +37,20 @@ export class PrismaLaboratoriesRepository {
     const laboratories = await this.prisma.laboratory.findMany();
     return laboratories;
   }
-  async findOne(id: number): Promise<Laboratory> {
+  async findOne(id: string): Promise<Laboratory> {
     const laboratory = await this.prisma.laboratory.findUnique({
       where: { id },
     });
     return laboratory;
   }
-  async update(id: number, laboratory: Laboratory): Promise<Laboratory> {
+  async update(id: string, laboratory: Laboratory): Promise<Laboratory> {
     const updatedLaboratory = await this.prisma.laboratory.update({
       where: { id },
       data: laboratory,
     });
     return updatedLaboratory;
   }
-  async remove(id: number): Promise<Laboratory> {
+  async remove(id: string): Promise<Laboratory> {
     const removeLaboratory = await this.prisma.laboratory.delete({
       where: { id },
     });
