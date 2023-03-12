@@ -1,7 +1,4 @@
-import { ILaboratory } from '../interfaces/laboratory.interface';
-
-export class Laboratory implements ILaboratory {
-  id?: number;
+export class CreateLaboratoryDto {
   name: string;
   nickname?: string;
   cgc?: string;

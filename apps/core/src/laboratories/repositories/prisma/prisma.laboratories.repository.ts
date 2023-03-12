@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateLaboratoryInput } from 'src/laboratories/dto/create-laboratory.input';
+import { CreateLaboratoryInput } from 'src/laboratories/dto/create-laboratory.dto';
 import { Laboratory } from 'src/laboratories/entities/laboratory.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
 

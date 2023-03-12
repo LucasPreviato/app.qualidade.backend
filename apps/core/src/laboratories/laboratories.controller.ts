@@ -7,8 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateLaboratoryInput } from './dto/create-laboratory.input';
-import { UpdateLaboratoryInput } from './dto/update-laboratory.input';
+import { CreateLaboratoryDto } from './dto/create-laboratory.dto';
+import { UpdateLaboratoryDto } from './dto/update-laboratory.dto';
 import { ILaboratory } from './interfaces/laboratory.interface';
 import { LaboratoriesService } from './laboratories.service';
 
@@ -18,7 +18,7 @@ export class LaboratoriesController {
   private readonly logger = new Logger(LaboratoriesController.name);
 
   @Post()
-  async createLaboratory(@Body() createLaboratoryInput: CreateLaboratoryInput) {
+  async createLaboratory(@Body() createLaboratoryInput: CreateLaboratoryDto) {
     const laboratory = await this.laboratoriesService.create(
       createLaboratoryInput,
     );
@@ -37,7 +37,7 @@ export class LaboratoriesController {
   @Put(':id')
   async update(
     @Body() id: number,
-    @Body() updateLaboratoryInput: UpdateLaboratoryInput,
+    @Body() updateLaboratoryInput: UpdateLaboratoryDto,
   ) {
     return this.laboratoriesService.update(id, updateLaboratoryInput);
   }

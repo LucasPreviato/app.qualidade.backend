@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CreateLaboratoryInput } from './dto/create-laboratory.input';
-import { UpdateLaboratoryInput } from './dto/update-laboratory.input';
+import { CreateLaboratoryDto } from './dto/create-laboratory.dto';
+import { UpdateLaboratoryDto } from './dto/update-laboratory.dto';
 import { Laboratory } from './entities/laboratory.entity';
 import { PrismaLaboratoriesRepository } from './repositories/prisma/prisma.laboratories.repository';
 
@@ -20,7 +20,7 @@ export class LaboratoriesService {
     email,
     phone,
     website,
-  }: CreateLaboratoryInput): Promise<Laboratory> {
+  }: CreateLaboratoryDto): Promise<Laboratory> {
     this.logger.log(`Creating laboratory: ${name}`);
     const laboratory = {
       name,
@@ -55,16 +55,7 @@ export class LaboratoriesService {
 
   async update(
     id: number,
-    {
-      name,
-      nickname,
-      cgc,
-      IE,
-      IM,
-      email,
-      phone,
-      website,
-    }: UpdateLaboratoryInput,
+    { name, nickname, cgc, IE, IM, email, phone, website }: UpdateLaboratoryDto,
   ): Promise<Laboratory> {
     const laboratory = await this.prismaLaboratoriesRepository.update(id, {
       id,
